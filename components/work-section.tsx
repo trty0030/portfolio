@@ -13,19 +13,11 @@ const projects = [
     githubUrl: "?",
   },
   {
-    title: "Webwaves",
-    description: "Website for webwaves, a web development company.",
-    image: "/webwaves.png",
-    tags: ["Laravel", "PHP", "Hostinger", "Mysql", "Laravel Breeze"],
-    liveUrl: "http://webwaves.online",
-    githubUrl: "?",
-  },
-  {
-    title: "Liquid Hosting",
-    description: "A game server hosting platform (No longer hosted)",
-    image: "?",
-    tags: ["AWS", "AWS S3", "AWS route-53", "AWS EC2", "Java", "Nodejs", "Nextjs"],
-    liveUrl: "?",
+    title: "Lopertyd portfolio website",
+    description: "A Portfolio website for luau developper Lopertyd",
+    image: "/lopertyd.png",
+    tags: ["Laravel", "AWS", "Lightsail", "Apache", "CSS", "Route53"],
+    liveUrl: "http://lopertyd.com",
     githubUrl: "?",
   },
 ]
@@ -63,7 +55,7 @@ export function WorkSection() {
                     </div>
 
                     <div className="flex gap-2">
-                      
+
                       {project.liveUrl !== "?" && (
                         <Link href={project.liveUrl}>
                           <Button size="sm" className="bg-primary hover:bg-primary/90">
