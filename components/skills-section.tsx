@@ -1,13 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react"
-import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
 const skills = [
   { name: "Laravel", level: 95, icon: "fa-brands fa-laravel" },
   { name: "Linux", level: 80, icon: "fa-brands fa-linux" },
-  { name: "Next.js", level: 65, icon: "fa-brands fa-neos" }, // No official Next.js icon; using Neos "N"
+  { name: "Next.js", level: 65, icon: "fa-brands fa-neos" },
   { name: "AWS", level: 85, icon: "fa-brands fa-aws" },
 
   { name: "JavaScript", level: 90, icon: "fa-brands fa-js" },
@@ -20,9 +19,28 @@ const skills = [
   { name: "UI/UX Design", level: 70, icon: "fa-solid fa-pencil-ruler" },
   { name: "React", level: 65, icon: "fa-brands fa-react" },
   { name: "Azure", level: 50, icon: "fa-brands fa-microsoft" },
-  { name: "Django (Learning now!)", level: 45, icon: "fa-solid fa-leaf" }, // No official Django icon, using 'leaf'
-
+  { name: "Django (Learning now!)", level: 45, icon: "fa-solid fa-leaf" },
 ]
+
+function SkillBar({ skill, index }: { skill: typeof skills[number]; index: number }) {
+  return (
+    <div className="group py-4 border-b border-border last:border-b-0 hover:bg-surface-raised/30 transition-colors duration-200 px-4 -mx-4">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <i className={`${skill.icon} text-base text-primary/70 w-5 text-center`} />
+          <span className="text-sm font-medium text-foreground">{skill.name}</span>
+        </div>
+        <span className="font-mono text-xs text-muted-foreground">{skill.level}%</span>
+      </div>
+      <div className="w-full h-[3px] bg-border rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-primary to-ember-light rounded-full transition-all duration-1000 ease-out"
+          style={{ width: `${skill.level}%` }}
+        />
+      </div>
+    </div>
+  )
+}
 
 export function SkillsSection() {
   const [showAll, setShowAll] = useState(false)
@@ -35,82 +53,81 @@ export function SkillsSection() {
 
   useEffect(() => {
     if (hiddenRef.current) {
-      // Measure full height of the hidden list to animate max-height
       setHiddenHeight(hiddenRef.current.scrollHeight)
     }
   }, [showAll, hiddenSkills.length])
 
   return (
-    <section id="skills" className="py-20 relative">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl text-center mb-16 text-foreground">
+    <section id="skills" className="py-24 lg:py-32 relative">
+      {/* Section divider */}
+      <div className="absolute top-0 left-6 lg:left-10 right-6 lg:right-10 h-px bg-border" />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        {/* Section header */}
+        <div className="flex items-center gap-4 mb-16">
+          <span className="font-mono text-xs tracking-[0.2em] text-primary uppercase">03</span>
+          <div className="w-8 h-px bg-primary" />
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-foreground">
             Skills & Expertise
           </h2>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {firstFour.map((skill, index) => (
-              <div key={index} className="glass rounded-lg p-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-medium text-foreground"><i className={`${skill.icon} text-lg`}></i> {skill.name}</span>
-                  <span className="text-primary font-semibold">{skill.level}%</span>
-                </div>
-                <div className="w-full bg-border rounded-full h-2">
-                  <div
-                    className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
-                  />
-                </div>
-              </div>
+        {/* Skills layout */}
+        <div className="grid lg:grid-cols-2 gap-x-16 gap-y-0">
+          {/* Left column */}
+          <div>
+            {firstFour.slice(0, 2).map((skill, i) => (
+              <SkillBar key={skill.name} skill={skill} index={i} />
             ))}
           </div>
+          {/* Right column */}
+          <div>
+            {firstFour.slice(2, 4).map((skill, i) => (
+              <SkillBar key={skill.name} skill={skill} index={i + 2} />
+            ))}
+          </div>
+        </div>
 
-          {hasHidden && (
-            <>
-              <div
-                ref={hiddenRef}
-                className="overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
-                style={{ maxHeight: showAll ? hiddenHeight : 0, opacity: showAll ? 1 : 0 }}
-              >
-                <div className="mt-8 grid md:grid-cols-2 gap-8">
-                  {hiddenSkills.map((skill, index) => (
-                    <div key={index} className="glass rounded-lg p-6">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="font-medium text-foreground"><i className={`${skill.icon} text-lg`}></i> {skill.name}</span>
-                        <span className="text-primary font-semibold">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-border rounded-full h-2">
-                        <div
-                          className="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-                    </div>
+        {hasHidden && (
+          <>
+            <div
+              ref={hiddenRef}
+              className="overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
+              style={{ maxHeight: showAll ? hiddenHeight : 0, opacity: showAll ? 1 : 0 }}
+            >
+              <div className="grid lg:grid-cols-2 gap-x-16 gap-y-0 mt-0">
+                {/* Split hidden skills into two columns */}
+                <div>
+                  {hiddenSkills.filter((_, i) => i % 2 === 0).map((skill, i) => (
+                    <SkillBar key={skill.name} skill={skill} index={i} />
+                  ))}
+                </div>
+                <div>
+                  {hiddenSkills.filter((_, i) => i % 2 === 1).map((skill, i) => (
+                    <SkillBar key={skill.name} skill={skill} index={i} />
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div className="mt-8 text-center">
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => setShowAll((v) => !v)}
-                  className="text-primary hover:text-blue-600"
-                >
-                  {showAll ? (
-                    <>
-                      Show less <ChevronUp className="size-4" />
-                    </>
-                  ) : (
-                    <>
-                      Show {skills.length - 4} more <ChevronDown className="size-4" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setShowAll((v) => !v)}
+                className="group inline-flex items-center gap-2 text-sm text-primary hover:text-ember-light transition-colors duration-200"
+              >
+                {showAll ? (
+                  <>
+                    Show less <ChevronUp className="size-4" />
+                  </>
+                ) : (
+                  <>
+                    Show {hiddenSkills.length} more <ChevronDown className="size-4" />
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </section>
   )

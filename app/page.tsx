@@ -16,8 +16,13 @@ export default function Home() {
       <ContactSection />
 
       <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground">© 2025 TRTY. Built with Next.js and Tailwind CSS.</p>
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
+            &copy; {new Date().getFullYear()} TRTY
+          </span>
+          <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
+            Built with Next.js & Tailwind CSS
+          </span>
         </div>
       </footer>
     </main>

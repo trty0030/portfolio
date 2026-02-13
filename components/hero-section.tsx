@@ -1,13 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react"
-import { Button } from "@/components/ui/button"
 import { ArrowDown, Mail } from "lucide-react"
-import Link from "next/link"
 
 export function HeroSection() {
   const words = ["Creative", "Fast", "Reliable", "Modern", "Scalable", "Responsive", "Mobile", "Desktop", "Comunicative", "Social"]
-  const [wordIndex, setWordIndex] = useState(0)
   const [displayText, setDisplayText] = useState(words[0])
 
   const frameRef = useRef<number | null>(null)
@@ -18,14 +15,13 @@ export function HeroSection() {
   }, [displayText])
 
   const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  const FRAME_STEP_MS = 32 // ~30 FPS
+  const FRAME_STEP_MS = 32
 
   function randomChar() {
     return glyphs[Math.floor(Math.random() * glyphs.length)]
   }
 
   function scramble(from: string, to: string, durationMs = 1400) {
-    // came here to look how this works? :>)
     return new Promise<void>((resolve) => {
       animatingRef.current = true
       const startTime = performance.now()
@@ -82,9 +78,6 @@ export function HeroSection() {
     const tick = async () => {
       idx = (idx + 1) % words.length
       await scramble(displayRef.current, words[idx])
-      if (!cancelled) {
-        setWordIndex(idx)
-      }
     }
 
     const intervalId = setInterval(() => {
@@ -101,50 +94,70 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/10" />
-
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="font-serif font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-foreground">
-            <span className="inline-block will-change-auto">
-              {displayText}
-            </span>
-            <span className="block text-primary">Developer</span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Crafting digital experiences that blend innovative design with cutting-edge technology
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href={'#work'}>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3">
-                View My Work
-                <ArrowDown className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href={'#contact'}>
-              <Button variant="outline" size="lg" className="border-border hover:bg-card px-8 py-3 bg-transparent">
-                Get in touch
-                <Mail className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
+    <section className="min-h-screen flex items-center relative overflow-hidden">
+      {/* Geometric background accents */}
+      <div className="absolute inset-0">
+        {/* Diagonal line */}
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent transform rotate-12 translate-x-[-30vw]" />
+        {/* Corner accent */}
+        <div className="absolute top-20 right-10 lg:right-20">
+          <div className="w-24 h-24 border border-border/50 rotate-45 opacity-40" />
+          <div className="w-16 h-16 border border-primary/20 rotate-45 absolute top-4 left-4 opacity-60" />
         </div>
+        {/* Subtle radial glow */}
+        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
       </div>
 
-      {/* Floating elements */}
-      <div className="absolute top-1/4 left-10 w-20 h-20 glass rounded-full animate-pulse" />
-      <div className="absolute bottom-1/3 right-10 w-16 h-16 glass rounded-full animate-pulse delay-1000" />
-      <div className="absolute top-1/2 right-1/4 w-12 h-12 glass rounded-full animate-pulse delay-500" />
-      {/* Extra floating elements (desktop only) */}
-      <div className="hidden md:block">
-        <div className="absolute top-10 right-1/3 w-10 h-10 glass rounded-full animate-pulse delay-700" />
-        <div className="absolute bottom-10 left-1/4 w-14 h-14 glass rounded-full animate-pulse delay-300" />
-        <div className="absolute bottom-20 right-1/2 w-8 h-8 glass rounded-full animate-pulse delay-1200" />
-        <div className="absolute top-1/3 left-1/2 w-16 h-16 glass rounded-full animate-pulse delay-900" />
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full relative z-10">
+        <div className="max-w-3xl">
+          {/* Monospace label */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px bg-primary" />
+            <span className="font-mono text-xs tracking-[0.2em] text-primary uppercase">
+              Developer & Designer
+            </span>
+          </div>
+
+          {/* Main headline */}
+          <h1 className="font-serif font-bold text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] mb-8 text-foreground">
+            <span className="inline-block will-change-auto font-mono text-primary">
+              {displayText}
+            </span>
+            <br />
+            <span className="text-foreground">Developer</span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
+            Crafting digital experiences that blend innovative design with cutting-edge technology.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-3 bg-primary text-primary-foreground px-7 py-3.5 text-sm font-medium tracking-wide hover:bg-ember-light transition-colors duration-300"
+            >
+              View My Work
+              <ArrowDown className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+            </a>
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-3 border border-border text-foreground px-7 py-3.5 text-sm font-medium tracking-wide hover:border-primary/50 hover:text-primary transition-colors duration-300"
+            >
+              Get in touch
+              <Mail className="h-4 w-4" />
+            </a>
+          </div>
+
+          {/* Bottom line accent */}
+          <div className="mt-20 flex items-center gap-4">
+            <div className="w-16 h-px bg-border" />
+            <span className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
+              Scroll to explore
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   )

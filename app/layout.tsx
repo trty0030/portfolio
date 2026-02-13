@@ -18,9 +18,8 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Portfolio - Creative Developer",
-  description: "Modern dark-themed portfolio showcasing creative development work",
-  generator: "v0.app",
+  title: "TRTY — Developer & Designer",
+  description: "Portfolio of TRTY — crafting digital experiences with modern web technologies",
 }
 
 export default function RootLayout({
@@ -30,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable} dark`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased grain">
         <Script src="https://kit.fontawesome.com/bbda2057fe.js" crossOrigin="anonymous" strategy="afterInteractive" />
         {children}
       </body>
