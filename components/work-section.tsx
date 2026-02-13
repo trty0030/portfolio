@@ -12,7 +12,7 @@ const projects = [
   },
   {
     title: "Lopertyd portfolio website",
-    description: "A Portfolio website for luau developper Lopertyd",
+    description: "A Portfolio website for luau developer Lopertyd",
     image: "/lopertyd.png",
     tags: ["Laravel", "AWS", "Lightsail", "Apache", "CSS", "Route53"],
     liveUrl: "http://lopertyd.com",
